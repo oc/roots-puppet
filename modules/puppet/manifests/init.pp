@@ -5,7 +5,7 @@ class puppet {
   }
   file {
     "/etc/sysconfig/puppet":
-      source => "puppet:///files/etc/sysconfig/puppet",
+      source => "puppet:///modules/puppet/templates/puppet.erb",
       require => Package[puppet],
   }
   package {
@@ -21,7 +21,7 @@ class puppet::master inherits puppet {
   }
   file {
     "/etc/sysconfig/puppetmaster":
-      source => "puppet:///files/etc/sysconfig/puppetmaster",
+      source => "puppet:///modules/puppet/templates/puppetmaster.erb",
       require => Package[puppetmaster],
   }
   package {
