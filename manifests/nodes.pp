@@ -1,20 +1,22 @@
 import 'base'
 import 'puppet'
 import 'ssh'
+import 'users'
 
 node default {
   include ssh
+  include users
   $puppetmaster_host = 'mgmt.muda.no'
   include puppet
 }
 
-node "roots1.muda.no" inherits default {
+node 'roots1.muda.no' inherits default {
 }
 
-node "roots2.muda.no" inherits default {
+node 'roots2.muda.no' inherits default {
 }
 
-node "mgmt.muda.no" inherits default {
-  $puppetmaster_manifest = '/etc/puppet/site/manifests/site.pp'
+node 'mgmt.muda.no' inherits default {
+  $puppetmaster_manifest = '/etc/puppet/manifests/site.pp'
   include puppet::master
 }
