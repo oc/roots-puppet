@@ -6,8 +6,9 @@ class puppet {
   file {
     "/etc/sysconfig/puppet":
       source => "puppet:///modules/puppet/templates/puppet.erb",
-      require => Package[puppet],
+      require => [ Package[puppet], File['/etc/sysconfig'] ],
   }
+
   package {
     puppet:
       ensure => present,
