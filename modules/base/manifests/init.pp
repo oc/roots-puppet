@@ -1,4 +1,2 @@
 class base {
 }
-
-include base
