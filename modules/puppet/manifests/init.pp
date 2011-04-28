@@ -17,13 +17,9 @@ class puppet {
 
 class puppet::master inherits puppet {
   file {
-    "/etc/sysconfig":
-      ensure => directory,
-  }
-  file {
     "/etc/sysconfig/puppetmaster":
       source => "puppet:///modules/puppet/templates/puppetmaster.erb",
-      require => Package[puppetmaster],
+      require => [ Package[puppet], Package[puppetmaster] ]
   }
   package {
     puppetmaster:
