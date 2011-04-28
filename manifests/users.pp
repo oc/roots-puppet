@@ -1,10 +1,14 @@
 # implicit param $name
-define create_user($group => "$name", $userhome="/home/$name", $shell = "/bin/bash", $comment => "$fullname") {
-  user { "$name":
+define create_user($group => "$name", $userhome => "/home/$name", $shell => "/bin/bash", $comment => "$fullname") {
+  user { $name:
     ensure  => present,
     comment => "$comment",
     shell   => "/bin/bash",
     home    => "$userhome"
+  }
+
+  group { $group:
+    ensure => present,
   }
 
   exec { "$name userhome":
@@ -23,5 +27,5 @@ define create_user($group => "$name", $userhome="/home/$name", $shell = "/bin/ba
 }
 
 create_user { 'bekk': userhome => '/u01/bring' }
-create_user { 'oc': group => 'staff' }
+create_user { 'oc':   group => 'staff' }
 create_user { 'steininge': group => 'staff' }
