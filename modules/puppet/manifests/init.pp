@@ -1,4 +1,4 @@
-class puppet {
+class puppet::agent {
   file {
     "/etc/sysconfig":
       ensure => directory,
@@ -9,20 +9,21 @@ class puppet {
       require => [ Package[puppet], File['/etc/sysconfig'] ],
   }
 
-  package {
-    puppet:
+  package { 'puppet':
       ensure => present,
   }
 }
 
-class puppet::master inherits puppet {
+class puppet::master {
+
+  include puppet::agent
+
   file {
     "/etc/sysconfig/puppetmaster":
       source => "puppet:///modules/puppet/templates/puppetmaster.erb",
-      require => [ Package[puppet], Package[puppetmaster] ]
+      require => [ Package[puppet], Package[puppet-server] ]
   }
-  package {
-    puppetmaster:
+  package { 'puppet-server':
       ensure => present,
   }
 }
