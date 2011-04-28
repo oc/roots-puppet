@@ -1,35 +1,26 @@
 class ssh {
   $port = 22
   $allow_users = []
-  file {
-    "/etc/ssh":
+  file { "/etc/ssh":
       ensure => directory,
       mode => 0755, owner => root, group => root,
   }
-  file {
-    "/usr/bin/ssh-agent":
-      group => ssh,
-      require => Package[openssh-client];
-  }
-  user {
-    sshd:
+  user { sshd:
       uid => 74, gid => 74,
       home => "/var/empty/sshd",
       shell => "/sbin/nologin",
       allowdupe => false,
   }
-  group {
-    sshd:
+  group { sshd:
       gid => 74,
       allowdupe => false,
   }
-  package {
-    "openssh-client":
+  package { "openssh-clients":
       ensure => installed,
-      require => [ File["/etc/ssh"], Group[sshd] ],
+      require => [ File["/etc/ssh"] ],
   }
-  package {
-    "openssh-server":
+
+  package { "openssh-server":
       ensure => installed,
       require => [ File["/etc/ssh"], User[sshd], Group[sshd] ],
   }
