@@ -1,10 +1,8 @@
 class puppet::agent {
-  file {
-    "/etc/sysconfig":
+  file { "/etc/sysconfig":
       ensure => directory,
   }
-  file {
-    "/etc/sysconfig/puppet":
+  file { "/etc/sysconfig/puppet":
       source => "puppet:///modules/puppet/templates/puppet.erb",
       require => [ Package[puppet], File['/etc/sysconfig'] ],
   }
@@ -18,11 +16,11 @@ class puppet::master {
 
   include puppet::agent
 
-  file {
-    "/etc/sysconfig/puppetmaster":
-      source => "puppet:///modules/puppet/templates/puppetmaster.erb",
-      require => [ Package[puppet], Package[puppet-server] ]
-  }
+  #file { "/etc/sysconfig/puppetmaster":
+  #    source => "puppet:///modules/puppet/templates/puppetmaster.erb",
+  #    require => [ Package[puppet-server] ],
+  #}
+
   package { 'puppet-server':
       ensure => present,
   }
