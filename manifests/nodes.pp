@@ -6,6 +6,7 @@ import 'users'
 node default {
   include ssh
   include users
+  include timezone
   $puppetmaster_host = 'mgmt.muda.no'
   include puppet
 }
