@@ -9,6 +9,7 @@ class puppet::agent {
   #}
 
   package { 'puppet': ensure => present }
+  package { 'ruby-rdoc': ensure => present } # For command-line help
 }
 
 class puppet::master {
