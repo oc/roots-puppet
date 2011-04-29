@@ -9,16 +9,17 @@ $puppetmaster_manifest = '/etc/puppet/manifests/site.pp'
 
 node default {
   include ssh
-  include users
   include timezone
+  include users::admins
   include puppet::agent
 }
 
 node 'roots1.muda.no' inherits default {
+  include users::deployers
 }
 
 node 'roots2.muda.no' inherits default {
-  include git
+  include users::deployers
 }
 
 node 'mgmt.muda.no' inherits default {
