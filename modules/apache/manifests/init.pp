@@ -1,13 +1,7 @@
 class apache {
 
-  package {
-    "httpd":
-      ensure  => installed,
-  }
+  package { 'httpd': ensure  => installed, }
 
-  service {
-    "httpd":
-      enable  => true,
-  }
+  service { 'httpd': enable  => true, }
 
 }
