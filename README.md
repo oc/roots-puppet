@@ -10,6 +10,7 @@ Install new node
 Create configuration (see manifests/nodes.pp)
 Run init-node.sh on new node
 Sign (certificate of) the new node with puppetca.
+
 <code>
   [root@mgmt site]# puppetca --sign node1.muda.no
   notice: Signed certificate request for node1.muda.no

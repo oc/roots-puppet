@@ -5,6 +5,8 @@
 
 set -e # exit immediately if a cmd fails
 
+test [[`lsb_release -is` eq "CentOS"]] || echo 1
+
 # Install rpmforge and epel repositories
 rpm -Uhv http://apt.sw.be/redhat/el5/en/i386/rpmforge/RPMS/rpmforge-release-0.5.2-2.el5.rf.i386.rpm
 
@@ -25,7 +27,7 @@ read HOSTNAME
 echo ${HOSTNAME} > /etc/hostname && hostname -F /etc/hostname
 
 # Append host to /etc/hosts
-PUBLIC_IPADDR=`ifconfig eth0 | awk -F':' '/inet addr/{split($2,_," ");print _[1]}'`
+PUBLIC_IPADDR=$(ifconfig eth0 | awk -F':' '/inet addr/{split($2,_," ");print _[1]}')
 echo -e "${PUBLIC_IPADDR}\t$(hostname) $(hostname -s)" >> /etc/hosts
 
 echo "*[ OK ]*******************************************"
