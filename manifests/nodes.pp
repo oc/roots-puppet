@@ -2,7 +2,6 @@ import 'base'
 import 'puppet'
 import 'ssh'
 import 'users'
-import 'git'
 import 'nexus'
 
 $puppetmaster_host     = 'mgmt.muda.no'
