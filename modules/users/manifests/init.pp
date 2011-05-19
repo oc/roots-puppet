@@ -23,6 +23,20 @@ class users::admins inherits users {
     managehome => true,
   }
 
+  file { '/home/oc/.ssh':
+    ensure => "directory",
+    mode   => 600,
+    owner  => 'oc',
+    gid    => '10',
+  }
+
+  file { '/home/stein/.ssh':
+    ensure => "directory",
+    mode   => 600,
+    owner  => 'stein',
+    gid    => '10',
+  }
+
 }
 
 class users::deployers inherits users {
@@ -37,4 +51,6 @@ class users::deployers inherits users {
     home    => "/u01/bring",
     managehome => true,
   }
+
+  ssh::auth::server { ['oc', 'stein']: user => 'bekk' }
 }
