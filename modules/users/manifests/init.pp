@@ -52,5 +52,5 @@ class users::deployers inherits users {
     managehome => true,
   }
 
-  ssh::auth::server { ['oc', 'stein']: user => 'bekk' }
+  #ssh::auth::server { ['oc', 'stein']: user => 'bekk' }
 }
