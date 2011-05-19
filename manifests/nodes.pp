@@ -9,6 +9,7 @@ $puppetmaster_manifest = '/etc/puppet/manifests/site.pp'
 
 node default {
   include ssh
+  include git
   include timezone
   include users::admins
   include puppet::agent
