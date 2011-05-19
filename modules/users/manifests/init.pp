@@ -27,14 +27,14 @@ class users::admins inherits users {
     ensure => "directory",
     mode   => 600,
     owner  => 'oc',
-    gid    => '10',
+    require => User['oc'],
   }
 
   file { '/home/stein/.ssh':
     ensure => "directory",
     mode   => 600,
     owner  => 'stein',
-    gid    => '10',
+    require => User['stein'],
   }
 
 }
@@ -51,5 +51,13 @@ class users::deployers inherits users {
     home    => "/u01/bring",
     managehome => true,
   }
+
+  file { '/home/bekk/.ssh':
+    ensure  => "directory",
+    mode    => 600,
+    owner   => 'bekk',
+    require => User['bekk'],
+  }
+
 
 }
