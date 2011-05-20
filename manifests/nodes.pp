@@ -21,7 +21,7 @@ node 'roots1.muda.no' inherits default {
 
 node 'roots2.muda.no' inherits default {
   include users::deployers
-  include oracle::java
+  include java::oracle
 }
 
 node 'mgmt.muda.no' inherits default {
