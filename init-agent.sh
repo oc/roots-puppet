@@ -16,6 +16,7 @@ yum install puppet -qy --enablerepo=${REPO}
 echo "*[ Enter hostname ]*******************************"
 read HOSTNAME
 echo ${HOSTNAME} > /etc/hostname && hostname -F /etc/hostname
+echo "HOSTNAME=${HOSTNAME}" >> /etc/sysconfig/network
 
 # Append host to /etc/hosts
 PUBLIC_IPADDR=`ifconfig eth0 | awk -F':' '/inet addr/{split($2,_," ");print _[1]}'`
