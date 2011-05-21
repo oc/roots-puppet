@@ -425,5 +425,3 @@ apache, mysql, java, nexus
 
 [uggedal]: http://uggedal.com/
 [love-dep]: http://blog.mahalo.com/dev-blog/2011/2/15/jacob-kaplan-moss-at-mahalo.html
-[mq]: http://mediaqueri.es/
-[wu]: http://wasitup.com/
