@@ -15,7 +15,7 @@ class mysql::server {
 }
 
 class mysql::client {
-  package { 'mysql-client':
+  package { 'mysql':
     ensure  => installed,
   }
 }
