@@ -42,11 +42,13 @@ Bare
 Master
 
     !sh
+    export HOSTNAME=mgmt.muda.no
     bash < <(curl -s https://github.com/oc/roots-puppet/raw/master/init-master.sh)
 
 Agent
 
     !sh
+    export HOSTNAME=node1.muda.no
     bash < <(curl -s https://github.com/oc/roots-puppet/raw/master/init-agent.sh)
 
 ---
