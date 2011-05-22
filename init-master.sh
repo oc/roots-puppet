@@ -3,18 +3,22 @@
 # Prepares a new puppet-node by installing puppet (from the epel-testing repository).
 #
 
-#set -e # exit immediately if a cmd fails
+set -e # exit immediately if a cmd fails
 if [[ -z $HOSTNAME ]]; then
   echo "ERROR: You need to export HOSTNAME=desired.fqdn.host"
   exit 1
 else
-  # Set hostname of node
-  echo "*[ Setting hostname to: ${HOSTNAME}]**************"
-  echo ${HOSTNAME} > /etc/hostname && hostname -F /etc/hostname
-  echo "HOSTNAME=${HOSTNAME}" >> /etc/sysconfig/network
+  if [[ $(hostname) -ne "${HOSTNAME}" ]]; then
+    echo "*[ Setting hostname to: ${HOSTNAME}]**************"
+    echo ${HOSTNAME} > /etc/hostname && hostname -F /etc/hostname
+    echo "HOSTNAME=${HOSTNAME}" >> /etc/sysconfig/network
+  fi
 fi
 
-test [[`lsb_release -is` -eq "CentOS"]] || echo 1
+if [[ $(lsb_release -is) -ne "CentOS" ]]; then
+  echo "ERROR: Only supports for CentOS for now"
+  exit 1
+fi
 
 # Install rpmforge and epel repositories
 rpm -Uhv http://apt.sw.be/redhat/el5/en/i386/rpmforge/RPMS/rpmforge-release-0.5.2-2.el5.rf.i386.rpm
@@ -23,7 +27,7 @@ yum install git -qy
 
 if [[ -z "$(grep bring/puppet.git /etc/puppet/.git/config)" ]]; then
   test -d /etc/puppet && mv /etc/puppet /etc/puppet.orig
-  git clone git@github.com:bring/puppet.git /etc/puppet
+  git clone git://github.com/oc/roots-puppet.git /etc/puppet
 fi
 
 REPO=epel-testing # should be set to 'epel' when puppet 2.6.x stable is uploaded there.
