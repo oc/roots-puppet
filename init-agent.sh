@@ -7,6 +7,11 @@ set -e # exit immediately if a cmd fails
 if [[ -z $HOSTNAME ]]; then
   echo "ERROR: You need to export HOSTNAME=desired.fqdn.host"
   exit 1
+else
+  # Set hostname of node
+  echo "*[ Setting hostname to: ${HOSTNAME}]**************"
+  echo ${HOSTNAME} > /etc/hostname && hostname -F /etc/hostname
+  echo "HOSTNAME=${HOSTNAME}" >> /etc/sysconfig/network
 fi
 
 # Install rpmforge and epel repositories
@@ -16,9 +21,6 @@ REPO=epel-testing # should be set to 'epel' when puppet 2.6.x stable is uploaded
 rpm -Uvh http://download.fedora.redhat.com/pub/epel/5/i386/epel-release-5-4.noarch.rpm
 yum install puppet -qy --enablerepo=${REPO}
 
-# Set hostname of node
-echo ${HOSTNAME} > /etc/hostname && hostname -F /etc/hostname
-echo "HOSTNAME=${HOSTNAME}" >> /etc/sysconfig/network
 
 # Append host to /etc/hosts
 PUBLIC_IPADDR=`ifconfig eth0 | awk -F':' '/inet addr/{split($2,_," ");print _[1]}'`
