@@ -3,7 +3,7 @@
 # Prepares a new puppet-node by installing puppet (from the epel-testing repository).
 #
 
-set -e # exit immediately if a cmd fails
+#set -e # exit immediately if a cmd fails
 if [[ -z $HOSTNAME ]]; then
   echo "ERROR: You need to export HOSTNAME=desired.fqdn.host"
   exit 1
