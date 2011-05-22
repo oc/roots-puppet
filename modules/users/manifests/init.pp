@@ -40,23 +40,23 @@ class users::admins inherits users {
 }
 
 class users::deployers inherits users {
-  group { 'bekk': ensure => present, gid => 2000 }
+  group { 'deploy': ensure => present, gid => 2000 }
 
-  user  { 'bekk':
+  user  { 'roots':
     ensure => present,
     uid => 2000,
     gid => 2000,
-    comment => 'BEKK Deployment User',
+    comment => 'ROOTS Deployment User',
     shell   => "/bin/bash",
-    home    => "/u01/bring",
+    home    => "/u01/roots",
     managehome => true,
   }
 
-  file { '/home/bekk/.ssh':
+  file { '/u01/roots/.ssh':
     ensure  => "directory",
     mode    => 600,
-    owner   => 'bekk',
-    require => User['bekk'],
+    owner   => 'roots',
+    require => User['roots'],
   }
 
 
