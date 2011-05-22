@@ -14,7 +14,7 @@ else
   echo "HOSTNAME=${HOSTNAME}" >> /etc/sysconfig/network
 fi
 
-test [[`lsb_release -is` eq "CentOS"]] || echo 1
+test [[`lsb_release -is` -eq "CentOS"]] || echo 1
 
 # Install rpmforge and epel repositories
 rpm -Uhv http://apt.sw.be/redhat/el5/en/i386/rpmforge/RPMS/rpmforge-release-0.5.2-2.el5.rf.i386.rpm
