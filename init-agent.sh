@@ -4,6 +4,10 @@
 #
 
 set -e # exit immediately if a cmd fails
+if [[ -z $HOSTNAME ]]; then
+  echo "ERROR: You need to export HOSTNAME=desired.fqdn.host"
+  exit 1
+fi
 
 # Install rpmforge and epel repositories
 rpm -Uhv http://apt.sw.be/redhat/el5/en/i386/rpmforge/RPMS/rpmforge-release-0.5.2-2.el5.rf.i386.rpm
@@ -13,8 +17,6 @@ rpm -Uvh http://download.fedora.redhat.com/pub/epel/5/i386/epel-release-5-4.noar
 yum install puppet -qy --enablerepo=${REPO}
 
 # Set hostname of node
-echo "*[ Enter hostname ]*******************************"
-read HOSTNAME
 echo ${HOSTNAME} > /etc/hostname && hostname -F /etc/hostname
 echo "HOSTNAME=${HOSTNAME}" >> /etc/sysconfig/network
 
