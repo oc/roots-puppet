@@ -8,7 +8,7 @@ if [[ -z $HOSTNAME ]]; then
   echo "ERROR: You need to export HOSTNAME=desired.fqdn.host"
   exit 1
 else
-  if [[ $(hostname) -ne "${HOSTNAME}" ]]; then
+  if [[ "$(hostname)" != "${HOSTNAME}" ]]; then
     echo "*[ Setting hostname to: ${HOSTNAME}]**************"
     echo ${HOSTNAME} > /etc/hostname && hostname -F /etc/hostname
     echo "HOSTNAME=${HOSTNAME}" >> /etc/sysconfig/network
