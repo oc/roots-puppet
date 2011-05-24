@@ -4,6 +4,7 @@ import 'ssh'
 import 'users'
 import 'nexus'
 import 'mysql'
+import 'java'
 
 $puppetmaster_host     = 'mgmt.muda.no'
 $puppetmaster_manifest = '/etc/puppet/manifests/site.pp'
@@ -19,11 +20,12 @@ node default {
 
 node 'node1.muda.no' inherits default {
   include users::deployers
+  include java
 }
 
 node 'node2.muda.no' inherits default {
   include users::deployers
-  include java::oracle
+  include java
 }
 
 node 'db1.muda.no' inherits default {
@@ -33,7 +35,7 @@ node 'db1.muda.no' inherits default {
 
 
 node 'mgmt.muda.no' inherits default {
-  include java::oracle
+  include java
   include puppet::master
   include sonatype::nexus
 }
