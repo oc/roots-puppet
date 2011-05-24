@@ -14,29 +14,29 @@ class java::oracle::oc {
 # Download official, unpack RPMs from binary
 class java::oracle::official inherits java {
 
-  file { '/etc/puppet/files/jdk-6u25-linux-i586.rpm':
+  file { '/tmp/jdk-6u25-linux-i586.rpm':
     ensure => present,
-    requires => [File['/etc/puppet/files/jdk-6u25-linux-i586-rpm.bin'], Exec["Unpack RPMs"]]
+    requires => [File['/tmp/jdk-6u25-linux-i586-rpm.bin'], Exec["Unpack RPMs"]]
   }
 
-  file { '/etc/puppet/files/jdk-6u25-linux-i586-rpm.bin':
+  file { '/tmp/jdk-6u25-linux-i586-rpm.bin':
     ensure => present,
-    requires => Exec["Fetch JDK"]
+    requires => Exec["Fetch JDK"],
   }
 
   exec { 'Fetch JDK':
-    command => "wget http://download.oracle.com/auth/otn-pub/java/jdk/6u25-b06/jdk-6u25-linux-i586-rpm.bin",
-    creates => '/etc/puppet/files/jdk-6u25-linux-i586-rpm.bin',
+    command => "curl http://download.oracle.com/auth/otn-pub/java/jdk/6u25-b06/jdk-6u25-linux-i586-rpm.bin > /tmp/jdk-6u25-linux-i586-rpm.bin",
+    creates => '/tmp/jdk-6u25-linux-i586-rpm.bin',
     path    => ["/usr/bin", "/bin"],
   }
 
   exec { 'Unpack RPMs':
-    command => "sh /etc/puppet/files/jdk-6u25-linux-i586-rpm.bin | echo \"\"",
-    creates => '/etc/puppet/files/jdk-6u25-linux-i586.rpm',
+    command => "sh /tmp/jdk-6u25-linux-i586-rpm.bin | echo \"\"",
+    creates => '/tmp/jdk-6u25-linux-i586.rpm',
     path    => ["/usr/bin", "/bin"],
   }
 
-  package { "jdk-6u25-linux-i586":
+  package { "jdk-1.6.0_25-fcs":
     ensure   => present,
     provider => rpm,
     source   => '/tmp/jdk-6u25-linux-i586.rpm',
@@ -52,7 +52,7 @@ class java::oracle::puppet inherits java {
     source => 'puppet:///files/jdk-6u25-linux-i586.rpm',
   }
 
-  package { "jdk-6u25-linux-i586":
+  package { "jdk-1.6.0_25-fcs":
     ensure   => present,
     provider => rpm,
     source   => '/tmp/jdk-6u25-linux-i586.rpm',
