@@ -8,6 +8,10 @@ class puppet::agent {
   #    require => [ Package[puppet], File['/etc/sysconfig'] ],
   #}
 
+  file { "/etc/puppet/puppet.conf":
+    source => "puppet:///modules/puppet/puppet.conf",
+  }
+
   package { 'puppet': ensure => present }
   package { 'ruby-rdoc': ensure => present } # For command-line help
 }
