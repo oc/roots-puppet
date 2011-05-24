@@ -17,11 +17,11 @@ node default {
   include mysql::client
 }
 
-node 'roots1.muda.no' inherits default {
+node 'node1.muda.no' inherits default {
   include users::deployers
 }
 
-node 'roots2.muda.no' inherits default {
+node 'node2.muda.no' inherits default {
   include users::deployers
   include java::oracle
 }
@@ -33,6 +33,7 @@ node 'db1.muda.no' inherits default {
 
 
 node 'mgmt.muda.no' inherits default {
+  include java::oracle
   include puppet::master
   include sonatype::nexus
 }
