@@ -36,5 +36,5 @@ node 'db1.muda.no' inherits default {
 node 'mgmt.muda.no' inherits default {
   include java
   include puppet::master
-  include sonatype::nexus
+  include nexus
 }

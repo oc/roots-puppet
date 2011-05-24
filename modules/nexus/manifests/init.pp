@@ -1,4 +1,4 @@
-class sonatype::nexus {
+class nexus {
 
   $nexus_bundle = "/etc/puppet/files/nexus-oss-webapp-1.9.1.1-bundle.tar.gz"
 
