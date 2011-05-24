@@ -1,6 +1,17 @@
 class nexus {
 
-  $nexus_bundle = "/etc/puppet/files/nexus-oss-webapp-1.9.1.1-bundle.tar.gz"
+  $nexus_bundle = "/tmp/nexus-oss-webapp-1.9.1.1-bundle.tar.gz"
+
+  file {$nexus_bundle:
+    ensure => present,
+    require => Exec["Fetch nexus"],
+  }
+
+  exec { "Fetch nexus":
+    command => "wget http://nexus.sonatype.org/downloads/nexus-oss-webapp-1.9.1.1-bundle.tar.gz $nexus_bundle",
+    creates => $nexus_bundle,
+    path    => ["/usr/bin", "/bin"],
+  }
 
   file { "/opt/nexus-oss-webapp-1.9.1.1":
     require => Exec["Extract nexus"],
