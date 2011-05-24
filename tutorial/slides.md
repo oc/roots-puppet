@@ -47,17 +47,21 @@ Reasons to use Puppet in stead of Chef:
 * A client&mdash;server installation is more lightweight (Chef needs
   RabbitMQ, CouchDB, Solr)
 
-Cfengine
-
-* If you're into compile issues.
-
 ---
+
+Example code
+============
+
+https://github.com/oc/roots-puppet
+
 
 Preparation
 ===========
 
 Bare
-    !sh yum install puppet
+
+    !sh
+    yum install puppet
 
 Master
 
@@ -92,10 +96,29 @@ On the puppet master:
     May 2 15:51:18 li304-113 puppet-master[3636]: node1.muda.no has a waiting certificate request
 
     !sh
-    puppetca --sign node1.muda.no
+    puppet cert --sign node1.muda.no
 
 ---
 
+
+Changes in 2.6.x
+================
+
+Single binary.
+
+* puppetmasterd → puppet master
+* puppetd → puppet agent
+* puppet → puppet apply
+* puppetca → puppet cert
+* ralsh → puppet resource
+* puppetrun → puppet kick
+* puppetqd → puppet queue
+* filebucket → puppet filebucket
+* puppetdoc → puppet doc
+* pi → puppet describe
+
+
+---
 
 Resources
 =========
@@ -116,6 +139,33 @@ Running puppet code
     puppet apply myfile.pp
 
 ---
+
+Debugging puppet code
+=====================
+
+Master
+
+    !sh
+    puppet master --no-deamonize
+
+Agents (files)
+
+    !sh
+    puppet --debug --verbose file.pp
+    puppet --parseonly file.pp
+
+Configurations
+
+    !puppet
+    # Notice the master log
+    notice("The value is: ${yourvar}")
+
+    # Notify the clients
+    notify{"The value is: ${yourvar}": }
+
+
+---
+
 
 Different resource types
 ========================
@@ -384,7 +434,24 @@ Control Structures
 ==================
 
   !puppet
-  $operationsystem ? { "CentOS" }
+  if $ensure in [ running, stopped ] {
+    $ensure_real = $ensure
+  } else {
+    fail('ensure parameter must be running or stopped')
+  }
+
+  !puppet
+  case $operatingsystem {
+    centos: {
+      $package_list = 'openssh-server'
+    }
+    solaris: {
+      $pacakge_list = [ SUNWsshr, SUNWsshu ]
+    }
+    default: {
+      fail("module $module_name does not support $operatingsystem")
+    }
+  }
 
 ---
 
@@ -402,44 +469,6 @@ The agents does not have access to the source configuration:
 2. The agent requests a configuration catalog from the master
 3. The master compiles the source configuration to a catalog and returns it to the agent
 4. The agent applies the catalog which results in configuration changes
-
----
-
-Debugging puppet code
-=====================
-
-Master
-
-    !sh
-    puppetmasterd --no-deamonize
-
-Agents (files)
-
-    !sh
-    puppet --debug --verbose file.pp
-    puppet --parseonly file.pp
-
-Configurations
-
-    !puppet
-    # Notice the master log
-    notice("The value is: ${yourvar}")
-
-    # Notify the clients
-    notify{"The value is: ${yourvar}": }
-
-
----
-
-
-Ralsh
-=====
-
-Ralsh can be used to inspect configuration and syntax
-
-    !sh
-    ralsh package nginx
-
 
 ---
 

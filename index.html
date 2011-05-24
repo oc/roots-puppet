@@ -987,7 +987,7 @@ body.expose .slide.current {
             </aside>
             
             <aside class="page_number">
-              1/23
+              1/27
             </aside>
           </footer>
         </div>
@@ -1026,7 +1026,7 @@ configuration management tool figures out how to make that true.</p>
             </aside>
             
             <aside class="page_number">
-              2/23
+              2/27
             </aside>
           </footer>
         </div>
@@ -1065,7 +1065,48 @@ configuration management tool figures out how to make that true.</p>
             </aside>
             
             <aside class="page_number">
-              3/23
+              3/27
+            </aside>
+          </footer>
+        </div>
+      </div>
+      
+      <!-- slide source: slides.md -->
+      <div class="slide-wrapper">
+        <div class="slide">
+          <div class="inner">
+            
+            <header><h1>Alternatives</h1></header>
+            
+            
+            <section><ul>
+<li>Cfengine</li>
+<li>Chef</li>
+</ul>
+<p>Reasons to use Puppet in stead of Chef:</p>
+<ul>
+<li>Bootstrap is easy: <code>yum install puppet</code></li>
+<li>Restricted language makes you think through what you need to do
+  and makes it hard to create quick hacks.</li>
+<li>A client&mdash;server installation is more lightweight (Chef needs
+  RabbitMQ, CouchDB, Solr)</li>
+</ul></section>
+            
+          </div>
+          <div class="presenter_notes">
+            <header><h1>Presenter Notes</h1></header>
+            <section>
+            
+            </section>
+          </div>
+          <footer>
+            
+            <aside class="source">
+              Source: <a href="slides.md">slides.md</a>
+            </aside>
+            
+            <aside class="page_number">
+              4/27
             </aside>
           </footer>
         </div>
@@ -1076,17 +1117,23 @@ configuration management tool figures out how to make that true.</p>
         <div class="slide has_code">
           <div class="inner">
             
-            <header><h1>Preparation</h1></header>
+            <header><h1>Example code</h1></header>
             
             
-            <section><p>Bare
-    !sh yum install puppet</p>
+            <section><p>https://github.com/oc/roots-puppet</p>
+<h1>Preparation</h1>
+<p>Bare</p>
+<div class="highlight"><pre><span class="lineno">1</span> yum install puppet
+</pre></div>
+
 <p>Master</p>
-<div class="highlight"><pre><span class="lineno">1</span> bash &lt; &lt;<span class="o">(</span>curl -s https://github.com/oc/roots-puppet/raw/master/init-master.sh<span class="o">)</span>
+<div class="highlight"><pre><span class="lineno">1</span> <span class="nb">export </span><span class="nv">HOSTNAME</span><span class="o">=</span>mgmt.muda.no
+<span class="lineno">2</span> bash &lt; &lt;<span class="o">(</span>curl -s https://github.com/oc/roots-puppet/raw/master/init-master.sh<span class="o">)</span>
 </pre></div>
 
 <p>Agent</p>
-<div class="highlight"><pre><span class="lineno">1</span> bash &lt; &lt;<span class="o">(</span>curl -s https://github.com/oc/roots-puppet/raw/master/init-agent.sh<span class="o">)</span>
+<div class="highlight"><pre><span class="lineno">1</span> <span class="nb">export </span><span class="nv">HOSTNAME</span><span class="o">=</span>node1.muda.no
+<span class="lineno">2</span> bash &lt; &lt;<span class="o">(</span>curl -s https://github.com/oc/roots-puppet/raw/master/init-agent.sh<span class="o">)</span>
 </pre></div>
 </section>
             
@@ -1104,7 +1151,93 @@ configuration management tool figures out how to make that true.</p>
             </aside>
             
             <aside class="page_number">
-              4/23
+              5/27
+            </aside>
+          </footer>
+        </div>
+      </div>
+      
+      <!-- slide source: slides.md -->
+      <div class="slide-wrapper">
+        <div class="slide has_code">
+          <div class="inner">
+            
+            <header><h1>Accept certificates / Sign nodes</h1></header>
+            
+            
+            <section><p>Start the node (once/test configuration):</p>
+<div class="highlight"><pre><span class="lineno">1</span> /etc/init.d/puppet once -v
+</pre></div>
+
+<p>To show a list of puppet agent configurations:</p>
+<div class="highlight"><pre><span class="lineno">1</span> /etc/init.d/puppet genconfig
+</pre></div>
+
+<p>On the puppet master:</p>
+<div class="highlight"><pre><span class="lineno">1</span> May 2 15:51:18 li304-113 puppet-master<span class="o">[</span>3636<span class="o">]</span>: node1.muda.no has a waiting certificate request
+<span class="lineno">2</span> 
+<span class="lineno">3</span> !sh
+<span class="lineno">4</span> puppet cert --sign node1.muda.no
+</pre></div>
+</section>
+            
+          </div>
+          <div class="presenter_notes">
+            <header><h1>Presenter Notes</h1></header>
+            <section>
+            
+            </section>
+          </div>
+          <footer>
+            
+            <aside class="source">
+              Source: <a href="slides.md">slides.md</a>
+            </aside>
+            
+            <aside class="page_number">
+              6/27
+            </aside>
+          </footer>
+        </div>
+      </div>
+      
+      <!-- slide source: slides.md -->
+      <div class="slide-wrapper">
+        <div class="slide">
+          <div class="inner">
+            
+            <header><h1>Changes in 2.6.x</h1></header>
+            
+            
+            <section><p>Single binary.</p>
+<ul>
+<li>puppetmasterd → puppet master</li>
+<li>puppetd → puppet agent</li>
+<li>puppet → puppet apply</li>
+<li>puppetca → puppet cert</li>
+<li>ralsh → puppet resource</li>
+<li>puppetrun → puppet kick</li>
+<li>puppetqd → puppet queue</li>
+<li>filebucket → puppet filebucket</li>
+<li>puppetdoc → puppet doc</li>
+<li>pi → puppet describe</li>
+</ul></section>
+            
+          </div>
+          <div class="presenter_notes">
+            <header><h1>Presenter Notes</h1></header>
+            <section>
+            
+            </section>
+          </div>
+          <footer>
+            
+            <aside class="source">
+              Source: <a href="slides.md">slides.md</a>
+            </aside>
+            
+            <aside class="page_number">
+              7/27
             </aside>
           </footer>
         </div>
@@ -1139,7 +1272,7 @@ configuration management tool figures out how to make that true.</p>
             </aside>
             
             <aside class="page_number">
-              5/23
+              8/27
             </aside>
           </footer>
         </div>
@@ -1171,7 +1304,7 @@ configuration management tool figures out how to make that true.</p>
             </aside>
             
             <aside class="page_number">
-              6/23
+              9/27
             </aside>
           </footer>
         </div>
@@ -1186,7 +1319,7 @@ configuration management tool figures out how to make that true.</p>
             
             
             <section><p>Master</p>
-<div class="highlight"><pre><span class="lineno">1</span> puppetmasterd --no-deamonize
+<div class="highlight"><pre><span class="lineno">1</span> puppet master --no-deamonize
 </pre></div>
 
 <p>Agents (files)</p>
@@ -1217,7 +1350,7 @@ configuration management tool figures out how to make that true.</p>
             </aside>
             
             <aside class="page_number">
-              7/23
+              10/27
             </aside>
           </footer>
         </div>
@@ -1266,7 +1399,7 @@ configuration management tool figures out how to make that true.</p>
             </aside>
             
             <aside class="page_number">
-              8/23
+              11/27
             </aside>
           </footer>
         </div>
@@ -1302,7 +1435,7 @@ configuration management tool figures out how to make that true.</p>
             </aside>
             
             <aside class="page_number">
-              9/23
+              12/27
             </aside>
           </footer>
         </div>
@@ -1355,7 +1488,7 @@ configuration management tool figures out how to make that true.</p>
             </aside>
             
             <aside class="page_number">
-              10/23
+              13/27
             </aside>
           </footer>
         </div>
@@ -1404,7 +1537,7 @@ configuration management tool figures out how to make that true.</p>
             </aside>
             
             <aside class="page_number">
-              11/23
+              14/27
             </aside>
           </footer>
         </div>
@@ -1456,7 +1589,7 @@ configuration management tool figures out how to make that true.</p>
             </aside>
             
             <aside class="page_number">
-              12/23
+              15/27
             </aside>
           </footer>
         </div>
@@ -1488,7 +1621,7 @@ configuration management tool figures out how to make that true.</p>
             </aside>
             
             <aside class="page_number">
-              13/23
+              16/27
             </aside>
           </footer>
         </div>
@@ -1527,7 +1660,7 @@ configuration management tool figures out how to make that true.</p>
             </aside>
             
             <aside class="page_number">
-              14/23
+              17/27
             </aside>
           </footer>
         </div>
@@ -1582,7 +1715,7 @@ configuration management tool figures out how to make that true.</p>
             </aside>
             
             <aside class="page_number">
-              15/23
+              18/27
             </aside>
           </footer>
         </div>
@@ -1614,7 +1747,7 @@ configuration management tool figures out how to make that true.</p>
             </aside>
             
             <aside class="page_number">
-              16/23
+              19/27
             </aside>
           </footer>
         </div>
@@ -1667,7 +1800,7 @@ configuration management tool figures out how to make that true.</p>
             </aside>
             
             <aside class="page_number">
-              17/23
+              20/27
             </aside>
           </footer>
         </div>
@@ -1708,7 +1841,7 @@ configuration management tool figures out how to make that true.</p>
             </aside>
             
             <aside class="page_number">
-              18/23
+              21/27
             </aside>
           </footer>
         </div>
@@ -1751,7 +1884,54 @@ configuration management tool figures out how to make that true.</p>
             </aside>
             
             <aside class="page_number">
-              19/23
+              22/27
+            </aside>
+          </footer>
+        </div>
+      </div>
+      
+      <!-- slide source: slides.md -->
+      <div class="slide-wrapper">
+        <div class="slide">
+          <div class="inner">
+            
+            <header><h1>Control Structures</h1></header>
+            
+            
+            <section><p>!puppet
+  if $ensure in [ running, stopped ] {
+    $ensure_real = $ensure
+  } else {
+    fail('ensure parameter must be running or stopped')
+  }</p>
+<p>!puppet
+  case $operatingsystem {
+    centos: {
+      $package_list = 'openssh-server'
+    }
+    solaris: {
+      $pacakge_list = [ SUNWsshr, SUNWsshu ]
+    }
+    default: {
+      fail("module $module_name does not support $operatingsystem")
+    }
+  }</p></section>
+            
+          </div>
+          <div class="presenter_notes">
+            <header><h1>Presenter Notes</h1></header>
+            <section>
+            
+            </section>
+          </div>
+          <footer>
+            
+            <aside class="source">
+              Source: <a href="slides.md">slides.md</a>
+            </aside>
+            
+            <aside class="page_number">
+              23/27
             </aside>
           </footer>
         </div>
@@ -1793,7 +1973,37 @@ configuration management tool figures out how to make that true.</p>
             </aside>
             
             <aside class="page_number">
-              20/23
+              24/27
+            </aside>
+          </footer>
+        </div>
+      </div>
+      
+      <!-- slide source: slides.md -->
+      <div class="slide-wrapper">
+        <div class="slide">
+          <div class="inner">
+            
+            <header><h1>Facter</h1></header>
+            
+            
+            <section><p>Facter &mdash; gathers information from the host system &mdash; can be extended. List standard variables that can be used (such as $operationsystem).</p></section>
+            
+          </div>
+          <div class="presenter_notes">
+            <header><h1>Presenter Notes</h1></header>
+            <section>
+            
+            </section>
+          </div>
+          <footer>
+            
+            <aside class="source">
+              Source: <a href="slides.md">slides.md</a>
+            </aside>
+            
+            <aside class="page_number">
+              25/27
             </aside>
           </footer>
         </div>
@@ -1810,8 +2020,6 @@ configuration management tool figures out how to make that true.</p>
             <section><ul>
 <li>Control structures (if, case)</li>
 <li>Ruby plugins for creating new functions or resource types</li>
-<li>Facter &mdash; gathers information from the host system &mdash;
-  can be extended</li>
 <li>Virtual resources.</li>
 <li>Exported resources.</li>
 <li>Separate environments (development, staging, production)</li>
@@ -1831,52 +2039,7 @@ configuration management tool figures out how to make that true.</p>
             </aside>
             
             <aside class="page_number">
-              21/23
-            </aside>
-          </footer>
-        </div>
-      </div>
-      
-      <!-- slide source: slides.md -->
-      <div class="slide-wrapper">
-        <div class="slide">
-          <div class="inner">
-            
-            <header><h1>Alternatives</h1></header>
-            
-            
-            <section><ul>
-<li>Cfengine</li>
-<li>Chef</li>
-</ul>
-<p>Reasons to use Puppet in stead of Chef:</p>
-<ul>
-<li>Bootstrap is easy: <code>yum install puppet</code></li>
-<li>Restricted language makes you think through what you need to do
-  and makes it hard to create quick hacks.</li>
-<li>A client&mdash;server installation is more lightweight (Chef needs
-  RabbitMQ, CouchDB, Solr)</li>
-</ul>
-<p>Cfengine</p>
-<ul>
-<li>If you're into compile issues.</li>
-</ul></section>
-            
-          </div>
-          <div class="presenter_notes">
-            <header><h1>Presenter Notes</h1></header>
-            <section>
-            
-            </section>
-          </div>
-          <footer>
-            
-            <aside class="source">
-              Source: <a href="slides.md">slides.md</a>
-            </aside>
-            
-            <aside class="page_number">
-              22/23
+              26/27
             </aside>
           </footer>
         </div>
@@ -1894,7 +2057,9 @@ configuration management tool figures out how to make that true.</p>
 <h2>Basic</h2>
 <p>yum, puppet agent, puppet-master, Users, SSH, Network, NTP, timezone, UFW, git</p>
 <h2>Servers</h2>
-<p>apache, mysql, java, nexus</p></section>
+<p>apache, mysql, java, nexus</p>
+<h2>Credits</h2>
+<p>Eivind Uggedal(uggedal) @uggedal</p></section>
             
           </div>
           <div class="presenter_notes">
@@ -1910,7 +2075,7 @@ configuration management tool figures out how to make that true.</p>
             </aside>
             
             <aside class="page_number">
-              23/23
+              27/27
             </aside>
           </footer>
         </div>
@@ -1937,110 +2102,134 @@ configuration management tool figures out how to make that true.</p>
       
       
       <tr id="toc-row-4">
-        <th><a href="#slide4">Preparation</a></th>
+        <th><a href="#slide4">Alternatives</a></th>
         <td><a href="#slide4">4</a></td>
       </tr>
       
       
       <tr id="toc-row-5">
-        <th><a href="#slide5">Resources</a></th>
+        <th><a href="#slide5">Example code</a></th>
         <td><a href="#slide5">5</a></td>
       </tr>
       
       
       <tr id="toc-row-6">
-        <th><a href="#slide6">Running puppet code</a></th>
+        <th><a href="#slide6">Accept certificates / Sign nodes</a></th>
         <td><a href="#slide6">6</a></td>
       </tr>
       
       
       <tr id="toc-row-7">
-        <th><a href="#slide7">Debugging puppet code</a></th>
+        <th><a href="#slide7">Changes in 2.6.x</a></th>
         <td><a href="#slide7">7</a></td>
       </tr>
       
       
       <tr id="toc-row-8">
-        <th><a href="#slide8">Different resource types</a></th>
+        <th><a href="#slide8">Resources</a></th>
         <td><a href="#slide8">8</a></td>
       </tr>
       
       
       <tr id="toc-row-9">
-        <th><a href="#slide9">Generic resource types</a></th>
+        <th><a href="#slide9">Running puppet code</a></th>
         <td><a href="#slide9">9</a></td>
       </tr>
       
       
       <tr id="toc-row-10">
-        <th><a href="#slide10">Dependencies between resources</a></th>
+        <th><a href="#slide10">Debugging puppet code</a></th>
         <td><a href="#slide10">10</a></td>
       </tr>
       
       
       <tr id="toc-row-11">
-        <th><a href="#slide11">Templates and variables</a></th>
+        <th><a href="#slide11">Different resource types</a></th>
         <td><a href="#slide11">11</a></td>
       </tr>
       
       
+      <tr id="toc-row-12">
+        <th><a href="#slide12">Generic resource types</a></th>
+        <td><a href="#slide12">12</a></td>
+      </tr>
+      
+      
       <tr id="toc-row-13">
-        <th><a href="#slide13">Running puppet code with templates</a></th>
+        <th><a href="#slide13">Dependencies between resources</a></th>
         <td><a href="#slide13">13</a></td>
       </tr>
       
       
       <tr id="toc-row-14">
-        <th><a href="#slide14">Modules</a></th>
+        <th><a href="#slide14">Templates and variables</a></th>
         <td><a href="#slide14">14</a></td>
       </tr>
       
       
-      <tr id="toc-row-15">
-        <th><a href="#slide15">Classes</a></th>
-        <td><a href="#slide15">15</a></td>
-      </tr>
-      
-      
       <tr id="toc-row-16">
-        <th><a href="#slide16">Applying modules</a></th>
+        <th><a href="#slide16">Running puppet code with templates</a></th>
         <td><a href="#slide16">16</a></td>
       </tr>
       
       
       <tr id="toc-row-17">
-        <th><a href="#slide17">Definitions</a></th>
+        <th><a href="#slide17">Modules</a></th>
         <td><a href="#slide17">17</a></td>
       </tr>
       
       
+      <tr id="toc-row-18">
+        <th><a href="#slide18">Classes</a></th>
+        <td><a href="#slide18">18</a></td>
+      </tr>
+      
+      
       <tr id="toc-row-19">
-        <th><a href="#slide19">Nodes</a></th>
+        <th><a href="#slide19">Applying modules</a></th>
         <td><a href="#slide19">19</a></td>
       </tr>
       
       
       <tr id="toc-row-20">
-        <th><a href="#slide20">Typical setup (client-server)</a></th>
+        <th><a href="#slide20">Definitions</a></th>
         <td><a href="#slide20">20</a></td>
       </tr>
       
       
-      <tr id="toc-row-21">
-        <th><a href="#slide21">More</a></th>
-        <td><a href="#slide21">21</a></td>
-      </tr>
-      
-      
       <tr id="toc-row-22">
-        <th><a href="#slide22">Alternatives</a></th>
+        <th><a href="#slide22">Nodes</a></th>
         <td><a href="#slide22">22</a></td>
       </tr>
       
       
       <tr id="toc-row-23">
-        <th><a href="#slide23">Examples from the configuration</a></th>
+        <th><a href="#slide23">Control Structures</a></th>
         <td><a href="#slide23">23</a></td>
+      </tr>
+      
+      
+      <tr id="toc-row-24">
+        <th><a href="#slide24">Typical setup (client-server)</a></th>
+        <td><a href="#slide24">24</a></td>
+      </tr>
+      
+      
+      <tr id="toc-row-25">
+        <th><a href="#slide25">Facter</a></th>
+        <td><a href="#slide25">25</a></td>
+      </tr>
+      
+      
+      <tr id="toc-row-26">
+        <th><a href="#slide26">More</a></th>
+        <td><a href="#slide26">26</a></td>
+      </tr>
+      
+      
+      <tr id="toc-row-27">
+        <th><a href="#slide27">Examples from the configuration</a></th>
+        <td><a href="#slide27">27</a></td>
       </tr>
       
       
