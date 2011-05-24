@@ -33,6 +33,26 @@ Users
 
 ---
 
+Alternatives
+============
+
+* Cfengine
+* Chef
+
+Reasons to use Puppet in stead of Chef:
+
+* Bootstrap is easy: `yum install puppet`
+* Restricted language makes you think through what you need to do
+  and makes it hard to create quick hacks.
+* A client&mdash;server installation is more lightweight (Chef needs
+  RabbitMQ, CouchDB, Solr)
+
+Cfengine
+
+* If you're into compile issues.
+
+---
+
 Preparation
 ===========
 
@@ -53,6 +73,30 @@ Agent
 
 ---
 
+Accept certificates / Sign nodes
+================================
+
+Start the node (once/test configuration):
+
+    !sh
+    /etc/init.d/puppet once -v
+
+To show a list of puppet agent configurations:
+
+    !sh
+    /etc/init.d/puppet genconfig
+
+On the puppet master:
+
+    !sh
+    May 2 15:51:18 li304-113 puppet-master[3636]: node1.muda.no has a waiting certificate request
+
+    !sh
+    puppetca --sign node1.muda.no
+
+---
+
+
 Resources
 =========
 
@@ -70,32 +114,6 @@ Running puppet code
 
     !sh
     puppet apply myfile.pp
-
----
-
-Debugging puppet code
-=====================
-
-Master
-
-    !sh
-    puppetmasterd --no-deamonize
-
-Agents (files)
-
-    !sh
-    puppet --debug --verbose file.pp
-    puppet --parseonly file.pp
-
-Configurations
-
-    !puppet
-    # Notice the master log
-    notice("The value is: ${yourvar}")
-
-    # Notify the clients
-    notify{"The value is: ${yourvar}": }
-
 
 ---
 
@@ -361,6 +379,15 @@ Uses classes and invokes definitions from modules.
 
 ---
 
+
+Control Structures
+==================
+
+  !puppet
+  $operationsystem ? { "CentOS" }
+
+---
+
 Typical setup (client-server)
 =============================
 
@@ -378,36 +405,63 @@ The agents does not have access to the source configuration:
 
 ---
 
+Debugging puppet code
+=====================
+
+Master
+
+    !sh
+    puppetmasterd --no-deamonize
+
+Agents (files)
+
+    !sh
+    puppet --debug --verbose file.pp
+    puppet --parseonly file.pp
+
+Configurations
+
+    !puppet
+    # Notice the master log
+    notice("The value is: ${yourvar}")
+
+    # Notify the clients
+    notify{"The value is: ${yourvar}": }
+
+
+---
+
+
+Ralsh
+=====
+
+Ralsh can be used to inspect configuration and syntax
+
+    !sh
+    ralsh package nginx
+
+
+---
+
+
+Facter
+======
+
+Facter &mdash; gathers information from the host system &mdash; can be extended. List standard variables that can be used (such as $operationsystem).
+
+
+
+---
+
+
 More
 ====
 
 * Control structures (if, case)
 * Ruby plugins for creating new functions or resource types
-* Facter &mdash; gathers information from the host system &mdash;
-  can be extended
 * Virtual resources.
 * Exported resources.
 * Separate environments (development, staging, production)
-
----
-
-Alternatives
-============
-
-* Cfengine
-* Chef
-
-Reasons to use Puppet in stead of Chef:
-
-* Bootstrap is easy: `yum install puppet`
-* Restricted language makes you think through what you need to do
-  and makes it hard to create quick hacks.
-* A client&mdash;server installation is more lightweight (Chef needs
-  RabbitMQ, CouchDB, Solr)
-
-Cfengine
-
-* If you're into compile issues.
 
 ---
 
@@ -423,6 +477,11 @@ yum, puppet agent, puppet-master, Users, SSH, Network, NTP, timezone, UFW, git
 Servers
 -------
 apache, mysql, java, nexus
+
+Credits
+-------
+Eivind Uggedal(uggedal) @uggedal
+
 
 
 [uggedal]: http://uggedal.com/

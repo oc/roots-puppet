@@ -33,7 +33,6 @@ node 'db1.muda.no' inherits default {
   include mysql::server
 }
 
-
 node 'mgmt.muda.no' inherits default {
   include java
   include puppet::master

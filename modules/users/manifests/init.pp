@@ -48,16 +48,21 @@ class users::deployers inherits users {
     gid => 2000,
     comment => 'ROOTS Deployment User',
     shell   => "/bin/bash",
-    home    => "/u01/roots",
+    home    => "/srv/roots",
     managehome => true,
   }
 
-  file { '/u01/roots/.ssh':
+  file { '/srv/roots/.ssh':
     ensure  => "directory",
     mode    => 600,
     owner   => 'roots',
     require => User['roots'],
   }
 
-
+  file { '/srv/roots/authorized_keys':
+    ensure => present,
+    mode   => 644,
+    source => "puppet:///modules/users/authorized_keys",
+    require => File['/srv/roots/.ssh'],
+  }
 }
