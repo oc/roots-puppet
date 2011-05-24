@@ -4,7 +4,7 @@ class java {
 
 # Install from remote source (RPM)
 class java::oracle::oc {
-  package { "jdk-6u25-linux-i586":
+  package { "jdk-1.6.0_25-fcs":
     ensure   => present,
     provider => rpm,
     source   => 'http://oc.rynning.no/jdk-6u25-linux-i586.rpm',
