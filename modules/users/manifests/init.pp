@@ -37,6 +37,23 @@ class users::admins inherits users {
     require => User['stein'],
   }
 
+  file { '/home/oc/.ssh/authorized_keys':
+    ensure => present,
+    mode   => 644,
+    owner  => 'oc',
+    source => "puppet:///modules/users/id_rsa.oc.pub",
+    require => File['/home/oc/.ssh'],
+  }
+
+  file { '/home/stein/.ssh/authorized_keys':
+    ensure => present,
+    mode   => 644,
+    owner  => 'stein',
+    source => "puppet:///modules/users/id_rsa.stein.pub",
+    require => File['/home/stein/.ssh'],
+  }
+
+
 }
 
 class users::deployers inherits users {
@@ -59,6 +76,7 @@ class users::deployers inherits users {
     require => User['roots'],
   }
 
+  # TODO: create define to create $authorized_keys_file with $users = ['a', 'b']
   file { '/srv/roots/.ssh/authorized_keys':
     ensure => present,
     mode   => 644,
