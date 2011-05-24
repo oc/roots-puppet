@@ -59,7 +59,7 @@ class users::deployers inherits users {
     require => User['roots'],
   }
 
-  file { '/srv/roots/authorized_keys':
+  file { '/srv/roots/.ssh/authorized_keys':
     ensure => present,
     mode   => 644,
     source => "puppet:///modules/users/authorized_keys",
