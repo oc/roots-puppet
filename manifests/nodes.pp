@@ -28,6 +28,13 @@ node 'node2.muda.no' inherits default {
   include java
 }
 
+node 'node3.muda.no' inherits default {
+  include users::deployers
+  include java
+  include mysql::server
+}
+
+
 node 'db1.muda.no' inherits default {
   include users::deployers
   include mysql::server
