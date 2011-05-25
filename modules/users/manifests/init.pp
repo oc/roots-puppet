@@ -61,6 +61,7 @@ class users::deployers inherits users {
 
   user  { 'roots':
     ensure => present,
+    password => 'roots123',
     uid => 2000,
     gid => 2000,
     comment => 'ROOTS Deployment User',
