@@ -49,6 +49,30 @@ Reasons to use Puppet in stead of Chef:
 
 ---
 
+Typical setup (client-server)
+=============================
+
+![Typical](puppet.png)
+
+---
+
+Typical setup (client-server)
+=============================
+
+* One Puppet master
+* Many Puppet agents which pulls the Puppet master for changes over a REST API
+* SSL certificate based authentication &mdash; agents needs to get signed
+  on the master
+
+The agents does not have access to the source configuration:
+
+1. The agent gathers local facts about its system
+2. The agent requests a configuration catalog from the master
+3. The master compiles the source configuration to a catalog and returns it to the agent
+4. The agent applies the catalog which results in configuration changes
+
+---
+
 Example code
 ============
 
@@ -454,24 +478,6 @@ Control Structures
   }
 
 ---
-
-Typical setup (client-server)
-=============================
-
-* One Puppet master
-* Many Puppet agents which pulls the Puppet master for changes over a REST API
-* SSL certificate based authentication &mdash; agents needs to get signed
-  on the master
-
-The agents does not have access to the source configuration:
-
-1. The agent gathers local facts about its system
-2. The agent requests a configuration catalog from the master
-3. The master compiles the source configuration to a catalog and returns it to the agent
-4. The agent applies the catalog which results in configuration changes
-
----
-
 
 Facter
 ======
